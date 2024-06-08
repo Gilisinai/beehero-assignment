@@ -5,6 +5,7 @@ import HomeScreen from '../screens/HomeScreen'
 
 import { RootStackParamList } from './types'
 import UsersScreen from '../screens/UsersScreen'
+import MapScreen from '../screens/MapScreen'
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
@@ -18,6 +19,7 @@ const AppNavigator = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen name="Users" component={UsersScreen} />
+        <Stack.Screen name="Map" component={MapScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   )
