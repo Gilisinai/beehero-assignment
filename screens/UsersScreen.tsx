@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, FlatList } from 'react-native'
+import { StyleSheet, Text, View, FlatList, ScrollView } from 'react-native'
 import { getUserPosts, getUsers } from '../services/api'
 import UserCard from '../components/UserCard'
 import { Post, User } from '../components/types'
@@ -38,7 +38,7 @@ const UsersScreen = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       {users.length > 0 ? (
         <FlatList
           data={users}
@@ -59,20 +59,19 @@ const UsersScreen = () => {
       ) : (
         <Text style={styles.noUsersText}>No users found</Text>
       )}
-      <View>
-        {userPosts.length > 0 ? (
-          <FlatList
-            data={userPosts}
-            renderItem={({ item }) => <PostCard post={item} />}
-            keyExtractor={(item) => item.id.toString()}
-            numColumns={4}
-            contentContainerStyle={styles.userCardContainer}
-          />
-        ) : (
-          <Text style={styles.noUsersText}>No posts found</Text>
-        )}
-      </View>
-    </View>
+
+      {userPosts.length > 0 ? (
+        <FlatList
+          data={userPosts}
+          renderItem={({ item }) => <PostCard post={item} />}
+          keyExtractor={(item) => item.id.toString()}
+          numColumns={4}
+          contentContainerStyle={styles.postCardContainer}
+        />
+      ) : (
+        <Text style={styles.noUsersText}>No posts found</Text>
+      )}
+    </ScrollView>
   )
 }
 
@@ -83,7 +82,10 @@ const styles = StyleSheet.create({
     padding: 10
   },
   userCardContainer: {
-    paddingVertical: 10
+    paddingBottom: 10
+  },
+  postCardContainer: {
+    paddingBottom: 40
   },
   noUsersText: {
     textAlign: 'center',
