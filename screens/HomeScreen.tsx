@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     height: 150
   },
   buttonContainer: {
-    width: '100%',
+    width: '50%',
     paddingHorizontal: 20,
     paddingBottom: 30
   },
