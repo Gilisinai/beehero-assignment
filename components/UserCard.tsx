@@ -7,9 +7,10 @@ import { GlobalStyles } from '../constants/styles'
 
 interface UserCardProps {
   user: User
+  onSelect: () => void
 }
 
-const UserCard: React.FC<UserCardProps> = ({ user }) => {
+const UserCard: React.FC<UserCardProps> = ({ onSelect, user }) => {
   const navigation = useNavigation<MapScreenNavigationProp>()
 
   const handleCoordinatesClick = () => {
@@ -20,7 +21,7 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
   }
 
   return (
-    <TouchableOpacity style={styles.card}>
+    <TouchableOpacity style={styles.card} onPress={onSelect}>
       <Text style={styles.name}>
         {user.name} ({user.username})
       </Text>

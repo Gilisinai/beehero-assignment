@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, FlatList } from 'react-native'
-import { getUsers } from '../services/api'
+import { getUserPosts, getUsers } from '../services/api'
 import UserCard from '../components/UserCard'
-import { User } from '../components/types'
+import { Post, User } from '../components/types'
+import PostCard from '../components/PostCard'
 
 const UsersScreen = () => {
   const [users, setUsers] = useState<User[]>([])
+  const [selectedUser, setSelectedUser] = useState<User | null>(null)
+  const [userPosts, setUserPosts] = useState<Post[]>([])
 
   useEffect(() => {
     fetchUsers()
@@ -20,19 +23,55 @@ const UsersScreen = () => {
     }
   }
 
+  const fetchUserPosts = async (userId: number) => {
+    try {
+      const response = await getUserPosts(userId)
+      setUserPosts(response.data)
+    } catch (error) {
+      console.error('Failed to fetch user posts:', error)
+    }
+  }
+
+  const handleUserSelect = (user: User) => {
+    setSelectedUser(user)
+    fetchUserPosts(user.id)
+  }
+
   return (
     <View style={styles.container}>
       {users.length > 0 ? (
         <FlatList
           data={users}
-          renderItem={({ item }) => <UserCard user={item} />}
+          renderItem={({ item }) => (
+            <UserCard onSelect={() => handleUserSelect(item)} user={item} />
+          )}
           keyExtractor={(item) => item.id.toString()}
           numColumns={4}
           contentContainerStyle={styles.userCardContainer}
+          ListFooterComponent={
+            selectedUser && (
+              <>
+                <Text style={styles.title}>{selectedUser.name}'s Posts</Text>
+              </>
+            )
+          }
         />
       ) : (
         <Text style={styles.noUsersText}>No users found</Text>
       )}
+      <View>
+        {userPosts.length > 0 ? (
+          <FlatList
+            data={userPosts}
+            renderItem={({ item }) => <PostCard post={item} />}
+            keyExtractor={(item) => item.id.toString()}
+            numColumns={4}
+            contentContainerStyle={styles.userCardContainer}
+          />
+        ) : (
+          <Text style={styles.noUsersText}>No posts found</Text>
+        )}
+      </View>
     </View>
   )
 }
@@ -50,6 +89,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 20,
     fontSize: 16
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginVertical: 10
   }
 })
 
