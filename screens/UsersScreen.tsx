@@ -15,7 +15,9 @@ const UsersScreen = () => {
   const dispatch = useDispatch<AppDispatch>()
   const { users, selectedUser } = useSelector((state: RootState) => state.users)
   const usersStatus = useSelector((state: RootState) => state.users.status)
-  const posts = useSelector((state: RootState) => state.posts.posts)
+  const posts = useSelector((state: RootState) =>
+    selectedUser ? state.posts.userPosts[selectedUser.id] || [] : []
+  )
   const postsStatus = useSelector((state: RootState) => state.posts.status)
 
   useEffect(() => {
@@ -25,7 +27,7 @@ const UsersScreen = () => {
   }, [usersStatus, dispatch])
 
   useEffect(() => {
-    if (selectedUser) {
+    if (selectedUser && !posts.length) {
       dispatch(fetchUserPosts(selectedUser.id))
     }
   }, [selectedUser, dispatch])
@@ -54,7 +56,9 @@ const UsersScreen = () => {
       {posts.length > 0 ? (
         <FlatList
           data={posts}
-          renderItem={({ item }) => <PostCard post={item} />}
+          renderItem={({ item }) => (
+            <PostCard post={item} userId={selectedUser!.id} />
+          )}
           keyExtractor={(item) => item.id.toString()}
           numColumns={4}
           contentContainerStyle={styles.postCardContainer}

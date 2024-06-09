@@ -6,13 +6,14 @@ import { removePost } from '../store/posts'
 
 interface PostCardProps {
   post: Post
+  userId: number
 }
 
-const PostCard: React.FC<PostCardProps> = ({ post }) => {
+const PostCard: React.FC<PostCardProps> = ({ post, userId }) => {
   const dispatch = useDispatch()
 
   const handleRemovePost = () => {
-    dispatch(removePost(post.id))
+    dispatch(removePost({ userId, postId: post.id }))
   }
 
   return (

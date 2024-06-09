@@ -4,13 +4,13 @@ import { getUserPosts } from '../services/api'
 import { Post } from '../components/types'
 
 interface PostsState {
-  posts: Post[]
+  userPosts: { [key: number]: Post[] }
   status: 'idle' | 'loading' | 'succeeded' | 'failed'
   error: string | null
 }
 
 const initialState: PostsState = {
-  posts: [],
+  userPosts: {},
   status: 'idle',
   error: null
 }
@@ -19,7 +19,7 @@ export const fetchUserPosts = createAsyncThunk(
   'posts/fetchUserPosts',
   async (userId: number) => {
     const response = await getUserPosts(userId)
-    return response.data
+    return { userId, posts: response.data }
   }
 )
 
@@ -27,8 +27,16 @@ const postsSlice = createSlice({
   name: 'posts',
   initialState,
   reducers: {
-    removePost: (state, action: PayloadAction<number>) => {
-      state.posts = state.posts.filter((post) => post.id !== action.payload)
+    removePost: (
+      state,
+      action: PayloadAction<{ userId: number; postId: number }>
+    ) => {
+      const { userId, postId } = action.payload
+      if (state.userPosts[userId]) {
+        state.userPosts[userId] = state.userPosts[userId].filter(
+          (post) => post.id !== postId
+        )
+      }
     }
   },
   extraReducers: (builder) => {
@@ -37,8 +45,9 @@ const postsSlice = createSlice({
         state.status = 'loading'
       })
       .addCase(fetchUserPosts.fulfilled, (state, action) => {
+        const { userId, posts } = action.payload
         state.status = 'succeeded'
-        state.posts = action.payload
+        state.userPosts[userId] = posts
       })
       .addCase(fetchUserPosts.rejected, (state, action) => {
         state.status = 'failed'
