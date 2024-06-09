@@ -11,7 +11,7 @@ interface UserCardProps {
   user: User
 }
 
-const UserCard: React.FC<UserCardProps> = ({ user }) => {
+const UserCard: React.FC<UserCardProps> = React.memo(({ user }) => {
   const navigation = useNavigation<MapScreenNavigationProp>()
   const dispatch = useDispatch()
 
@@ -47,7 +47,7 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
       </TouchableOpacity>
     </TouchableOpacity>
   )
-}
+})
 
 const styles = StyleSheet.create({
   card: {

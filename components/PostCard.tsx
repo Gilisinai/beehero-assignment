@@ -10,23 +10,28 @@ interface PostCardProps {
   onEdit: () => void
 }
 
-const PostCard: React.FC<PostCardProps> = ({ post, userId, onEdit }) => {
-  const dispatch = useDispatch()
+const PostCard: React.FC<PostCardProps> = React.memo(
+  ({ post, userId, onEdit }) => {
+    const dispatch = useDispatch()
 
-  const handleRemovePost = () => {
-    dispatch(removePost({ userId, postId: post.id }))
-  }
+    const handleRemovePost = () => {
+      dispatch(removePost({ userId, postId: post.id }))
+    }
 
-  return (
-    <TouchableOpacity style={styles.card} onPress={onEdit}>
-      <Text style={styles.title}>{post.title}</Text>
-      <Text style={styles.body}>{post.body}</Text>
-      <TouchableOpacity style={styles.removeButton} onPress={handleRemovePost}>
-        <Text style={styles.removeText}>X</Text>
+    return (
+      <TouchableOpacity style={styles.card} onPress={onEdit}>
+        <Text style={styles.title}>{post.title}</Text>
+        <Text style={styles.body}>{post.body}</Text>
+        <TouchableOpacity
+          style={styles.removeButton}
+          onPress={handleRemovePost}
+        >
+          <Text style={styles.removeText}>X</Text>
+        </TouchableOpacity>
       </TouchableOpacity>
-    </TouchableOpacity>
-  )
-}
+    )
+  }
+)
 
 const styles = StyleSheet.create({
   card: {

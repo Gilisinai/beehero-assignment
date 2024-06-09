@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, FlatList, ScrollView } from 'react-native'
 import UserCard from '../components/UserCard'
 import { Post, User } from '../components/types'
@@ -15,7 +15,7 @@ import { getUsers, getSelectedUser } from '../store/selectors/userSelectors'
 import { getPostsByUserId } from '../store/selectors/postSelectors'
 import { useAppSelector } from '../store/hooks/hooks'
 
-const UsersScreen = () => {
+const UsersScreen = React.memo(() => {
   const dispatch = useDispatch<AppDispatch>()
   const users = useAppSelector(getUsers)
   const selectedUser = useAppSelector(getSelectedUser)
@@ -101,7 +101,7 @@ const UsersScreen = () => {
       )}
     </ScrollView>
   )
-}
+})
 
 const styles = StyleSheet.create({
   container: {
