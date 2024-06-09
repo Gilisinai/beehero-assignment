@@ -7,9 +7,10 @@ import { removePost } from '../store/posts'
 interface PostCardProps {
   post: Post
   userId: number
+  onEdit: () => void
 }
 
-const PostCard: React.FC<PostCardProps> = ({ post, userId }) => {
+const PostCard: React.FC<PostCardProps> = ({ post, userId, onEdit }) => {
   const dispatch = useDispatch()
 
   const handleRemovePost = () => {
@@ -17,10 +18,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, userId }) => {
   }
 
   return (
-    <TouchableOpacity
-      style={styles.card}
-      // onPress={onSelect}
-    >
+    <TouchableOpacity style={styles.card} onPress={onEdit}>
       <Text style={styles.title}>{post.title}</Text>
       <Text style={styles.body}>{post.body}</Text>
       <TouchableOpacity style={styles.removeButton} onPress={handleRemovePost}>

@@ -37,6 +37,24 @@ const postsSlice = createSlice({
           (post) => post.id !== postId
         )
       }
+    },
+    updatePost: (
+      state,
+      action: PayloadAction<{
+        userId: number
+        postId: number
+        title: string
+        body: string
+      }>
+    ) => {
+      const { userId, postId, title, body } = action.payload
+      if (state.userPosts[userId]) {
+        const post = state.userPosts[userId].find((post) => post.id === postId)
+        if (post) {
+          post.title = title
+          post.body = body
+        }
+      }
     }
   },
   extraReducers: (builder) => {
@@ -56,5 +74,5 @@ const postsSlice = createSlice({
   }
 })
 
-export const { removePost } = postsSlice.actions
+export const { removePost, updatePost } = postsSlice.actions
 export default postsSlice.reducer

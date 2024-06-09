@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, FlatList, ScrollView } from 'react-native'
 import UserCard from '../components/UserCard'
 import { Post, User } from '../components/types'
@@ -10,6 +10,7 @@ import { RootState } from '../store/rootReducer'
 import { fetchUsers } from '../store/users'
 import { AppDispatch } from '../store/store'
 import { fetchUserPosts } from '../store/posts'
+import EditPostModal from '../components/EditPostModal'
 
 const UsersScreen = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -19,6 +20,8 @@ const UsersScreen = () => {
     selectedUser ? state.posts.userPosts[selectedUser.id] || [] : []
   )
   const postsStatus = useSelector((state: RootState) => state.posts.status)
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [editablePost, setEditablePost] = useState<Post | null>(null)
 
   useEffect(() => {
     if (usersStatus === 'idle') {
@@ -31,6 +34,16 @@ const UsersScreen = () => {
       dispatch(fetchUserPosts(selectedUser.id))
     }
   }, [selectedUser, dispatch])
+
+  const handlePostEdit = (post: Post) => {
+    setEditablePost(post)
+    setIsModalVisible(true)
+  }
+
+  const handleModalClose = () => {
+    setIsModalVisible(false)
+    setEditablePost(null)
+  }
 
   return (
     <ScrollView style={styles.container}>
@@ -57,7 +70,11 @@ const UsersScreen = () => {
         <FlatList
           data={posts}
           renderItem={({ item }) => (
-            <PostCard post={item} userId={selectedUser!.id} />
+            <PostCard
+              post={item}
+              userId={selectedUser!.id}
+              onEdit={() => handlePostEdit(item)}
+            />
           )}
           keyExtractor={(item) => item.id.toString()}
           numColumns={4}
@@ -65,6 +82,15 @@ const UsersScreen = () => {
         />
       ) : (
         <Text style={styles.noUsersText}>No posts found</Text>
+      )}
+
+      {editablePost && selectedUser && (
+        <EditPostModal
+          post={editablePost}
+          userId={selectedUser.id}
+          visible={isModalVisible}
+          onClose={handleModalClose}
+        />
       )}
     </ScrollView>
   )
