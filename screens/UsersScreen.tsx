@@ -5,24 +5,24 @@ import UserCard from '../components/UserCard'
 import { Post, User } from '../components/types'
 import PostCard from '../components/PostCard'
 import { GlobalStyles } from '../constants/styles'
+import { useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
+import { RootState } from '../store/rootReducer'
+import { fetchUsers } from '../store/users'
+import { AppDispatch } from '../store/store'
 
 const UsersScreen = () => {
-  const [users, setUsers] = useState<User[]>([])
+  const dispatch = useDispatch<AppDispatch>()
+  const users = useSelector((state: RootState) => state.users.users)
+  const usersStatus = useSelector((state: RootState) => state.users.status)
   const [selectedUser, setSelectedUser] = useState<User | null>(null)
   const [userPosts, setUserPosts] = useState<Post[]>([])
 
   useEffect(() => {
-    fetchUsers()
-  }, [])
-
-  const fetchUsers = async () => {
-    try {
-      const response = await getUsers()
-      setUsers(response.data)
-    } catch (error) {
-      console.error('Failed to fetch users:', error)
+    if (usersStatus === 'idle') {
+      dispatch(fetchUsers())
     }
-  }
+  }, [usersStatus, dispatch])
 
   const fetchUserPosts = async (userId: number) => {
     try {
