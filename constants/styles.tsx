@@ -1,7 +1,7 @@
 export const GlobalStyles = {
   colors: {
     primary: '#FECE00',
-    text: '#000',
+    secondary: '#000',
     backgorund: '#fff'
   },
   card: {

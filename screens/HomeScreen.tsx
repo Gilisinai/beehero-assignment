@@ -13,11 +13,10 @@ type HomeScreenNavigationProp = NativeStackNavigationProp<
 const HomeScreen = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>()
 
-  console.log('homescreen rendered')
-
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
+        <Text style={styles.text}>Gili Sinai's Home Assignment</Text>
         <Image
           source={{ uri: 'https://i.ibb.co/Bs2xB7S/beehero-icon.png' }}
           style={styles.img}
@@ -41,12 +40,17 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 50,
-    backgroundColor: GlobalStyles.colors.primary
+    backgroundColor: GlobalStyles.colors.backgorund
   },
   imageContainer: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    gap: 8
+  },
+  text: {
+    color: GlobalStyles.colors.secondary,
+    fontSize: 22
   },
   img: {
     width: 150,
@@ -66,7 +70,7 @@ const styles = StyleSheet.create({
     borderWidth: 1
   },
   buttonText: {
-    color: GlobalStyles.colors.text,
+    color: GlobalStyles.colors.secondary,
     fontSize: 16
   }
 })

@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, FlatList, ScrollView } from 'react-native'
+import { StyleSheet, Text, FlatList, ScrollView } from 'react-native'
 import UserCard from '../components/UserCard'
-import { Post, User } from '../components/types'
+import { Post } from '../components/types'
 import PostCard from '../components/PostCard'
 import { GlobalStyles } from '../constants/styles'
 import { useDispatch } from 'react-redux'
-import { useSelector } from 'react-redux'
 import { RootState } from '../store/rootReducer'
 import { fetchUsers } from '../store/users'
 import { AppDispatch } from '../store/store'
-import { conditionalFetchUserPosts, fetchUserPosts } from '../store/posts'
+import { conditionalFetchUserPosts } from '../store/posts'
 import EditPostModal from '../components/EditPostModal'
 import { getUsers, getSelectedUser } from '../store/selectors/userSelectors'
-import { getPostsByUserId } from '../store/selectors/postSelectors'
 import { useAppSelector } from '../store/hooks/hooks'
 
 const UsersScreen = React.memo(() => {
@@ -54,7 +52,7 @@ const UsersScreen = React.memo(() => {
           data={users}
           renderItem={({ item }) => <UserCard user={item} />}
           keyExtractor={(item) => item.id.toString()}
-          numColumns={4}
+          numColumns={2}
           scrollEnabled={false}
           contentContainerStyle={styles.userCardContainer}
           ListFooterComponent={
@@ -83,7 +81,7 @@ const UsersScreen = React.memo(() => {
             />
           )}
           keyExtractor={(item) => item.id.toString()}
-          numColumns={4}
+          numColumns={2}
           scrollEnabled={false}
           contentContainerStyle={styles.postCardContainer}
         />
@@ -106,7 +104,7 @@ const UsersScreen = React.memo(() => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: GlobalStyles.colors.primary,
+    backgroundColor: GlobalStyles.colors.backgorund,
     padding: 10
   },
   userCardsContainer: {
