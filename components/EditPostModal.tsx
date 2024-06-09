@@ -1,5 +1,5 @@
 // components/EditPostModal.tsx
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { View, Text, TextInput, Button, StyleSheet, Modal } from 'react-native'
 import { useDispatch } from 'react-redux'
 import { updatePost } from '../store/posts'
@@ -21,6 +21,8 @@ const EditPostModal: React.FC<EditPostModalProps> = ({
 }) => {
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
+  const titleInputRef = useRef<TextInput>(null)
+  const bodyInputRef = useRef<TextInput>(null)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -43,17 +45,23 @@ const EditPostModal: React.FC<EditPostModalProps> = ({
         <View style={styles.modalContent}>
           <Text style={styles.title}>Edit Post</Text>
           <TextInput
+            ref={titleInputRef}
             style={styles.input}
             value={title}
             onChangeText={setTitle}
             placeholder="Title"
+            returnKeyType="next"
+            onSubmitEditing={() => bodyInputRef.current?.focus()}
           />
           <TextInput
+            ref={bodyInputRef}
             style={styles.input}
             value={body}
             onChangeText={setBody}
             placeholder="Body"
             multiline
+            returnKeyType="done"
+            onSubmitEditing={handleSave}
           />
           <View style={styles.buttonContainer}>
             <Button title="Save" onPress={handleSave} />
