@@ -4,6 +4,7 @@ import { getUserPosts, getUsers } from '../services/api'
 import UserCard from '../components/UserCard'
 import { Post, User } from '../components/types'
 import PostCard from '../components/PostCard'
+import { GlobalStyles } from '../constants/styles'
 
 const UsersScreen = () => {
   const [users, setUsers] = useState<User[]>([])
@@ -78,7 +79,7 @@ const UsersScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: GlobalStyles.colors.primary,
     padding: 10
   },
   userCardContainer: {

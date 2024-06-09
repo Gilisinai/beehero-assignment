@@ -38,7 +38,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 50
+    paddingVertical: 50,
+    backgroundColor: GlobalStyles.colors.primary
   },
   imageContainer: {
     flex: 1,
@@ -47,7 +48,8 @@ const styles = StyleSheet.create({
   },
   img: {
     width: 150,
-    height: 150
+    height: 150,
+    borderWidth: 1
   },
   buttonContainer: {
     width: '50%',
@@ -58,7 +60,8 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.colors.primary,
     padding: 10,
     borderRadius: 5,
-    alignItems: 'center'
+    alignItems: 'center',
+    borderWidth: 1
   },
   buttonText: {
     color: GlobalStyles.colors.text,
