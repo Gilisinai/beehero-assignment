@@ -23,6 +23,9 @@ This project is a React Native application built with TypeScript. It allows user
   - Edit post titles and bodies with validation.
   - Remove posts from the list.
 
+- **Location on a Map **
+  - Show user's lat,lng with a bee marker on a map.
+
 - **UI/UX Improvements**
   - Custom button styles.
   - Improved card designs for users and posts.
