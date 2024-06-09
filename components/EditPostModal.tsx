@@ -21,6 +21,8 @@ const EditPostModal: React.FC<EditPostModalProps> = ({
 }) => {
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
+  const [titleError, setTitleError] = useState('')
+  const [bodyError, setBodyError] = useState('')
   const titleInputRef = useRef<TextInput>(null)
   const bodyInputRef = useRef<TextInput>(null)
   const dispatch = useDispatch()
@@ -29,11 +31,28 @@ const EditPostModal: React.FC<EditPostModalProps> = ({
     if (post) {
       setTitle(post.title)
       setBody(post.body)
+      setTitleError('')
+      setBodyError('')
     }
   }, [post])
 
   const handleSave = () => {
-    if (post) {
+    let valid = true
+    if (title.trim() === '') {
+      setTitleError('Title cannot be empty')
+      valid = false
+    } else {
+      setTitleError('')
+    }
+
+    if (body.trim() === '') {
+      setBodyError('Body cannot be empty')
+      valid = false
+    } else {
+      setBodyError('')
+    }
+
+    if (valid && post) {
       dispatch(updatePost({ userId, postId: post.id, title, body }))
       onClose()
     }
@@ -46,16 +65,19 @@ const EditPostModal: React.FC<EditPostModalProps> = ({
           <Text style={styles.title}>Edit Post</Text>
           <TextInput
             ref={titleInputRef}
-            style={styles.input}
+            style={[styles.input, titleError ? styles.errorInput : null]}
             value={title}
             onChangeText={setTitle}
             placeholder="Title"
             returnKeyType="next"
             onSubmitEditing={() => bodyInputRef.current?.focus()}
           />
+          {titleError ? (
+            <Text style={styles.errorText}>{titleError}</Text>
+          ) : null}
           <TextInput
             ref={bodyInputRef}
-            style={styles.input}
+            style={[styles.input, bodyError ? styles.errorInput : null]}
             value={body}
             onChangeText={setBody}
             placeholder="Body"
@@ -63,6 +85,7 @@ const EditPostModal: React.FC<EditPostModalProps> = ({
             returnKeyType="done"
             onSubmitEditing={handleSave}
           />
+          {bodyError ? <Text style={styles.errorText}>{bodyError}</Text> : null}
           <View style={styles.buttonContainer}>
             <Button title="Save" onPress={handleSave} />
             <Button title="Cancel" onPress={onClose} />
@@ -98,6 +121,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     padding: 10,
+    marginBottom: 10
+  },
+  errorInput: {
+    borderColor: 'red'
+  },
+  errorText: {
+    color: 'red',
+    alignSelf: 'flex-start',
     marginBottom: 10
   },
   buttonContainer: {
