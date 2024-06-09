@@ -19,7 +19,7 @@ const UsersScreen = () => {
   const posts = useSelector((state: RootState) =>
     selectedUser ? state.posts.userPosts[selectedUser.id] || [] : []
   )
-  const postsStatus = useSelector((state: RootState) => state.posts.status)
+
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [editablePost, setEditablePost] = useState<Post | null>(null)
 
@@ -53,6 +53,7 @@ const UsersScreen = () => {
           renderItem={({ item }) => <UserCard user={item} />}
           keyExtractor={(item) => item.id.toString()}
           numColumns={4}
+          scrollEnabled={false}
           contentContainerStyle={styles.userCardContainer}
           ListFooterComponent={
             selectedUser && (
@@ -78,6 +79,7 @@ const UsersScreen = () => {
           )}
           keyExtractor={(item) => item.id.toString()}
           numColumns={4}
+          scrollEnabled={false}
           contentContainerStyle={styles.postCardContainer}
         />
       ) : (
@@ -101,6 +103,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: GlobalStyles.colors.primary,
     padding: 10
+  },
+  userCardsContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    flex: 1
   },
   userCardContainer: {
     paddingBottom: 10
