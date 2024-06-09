@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 import { useDispatch } from 'react-redux'
-import { removePost } from '../store/posts'
+import { removePost } from '../store/slices/posts'
 import { Post } from './types'
 import { GlobalStyles } from '../constants/styles'
 

@@ -1,8 +1,7 @@
-// features/posts/postsSlice.ts
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
-import { getUserPosts } from '../services/api'
-import { Post } from '../components/types'
-import { RootState } from './rootReducer'
+import { getUserPosts } from '../../services/api'
+import { Post } from '../../components/types'
+import { RootState } from '../rootReducer'
 
 interface PostsState {
   userPosts: { [key: number]: Post[] }

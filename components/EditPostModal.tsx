@@ -1,6 +1,5 @@
-// components/EditPostModal.tsx
 import React, { useState, useEffect, useRef } from 'react'
-import { View, Text, TextInput, Button, StyleSheet, Modal } from 'react-native'
+import { View, Text, TextInput, StyleSheet, Modal } from 'react-native'
 import { useDispatch } from 'react-redux'
 import { updatePost } from '../store/slices/posts'
 import { Post } from './types'

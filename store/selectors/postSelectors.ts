@@ -1,4 +1,3 @@
-// selectors/postsSelectors.ts
 import { createSelector } from 'reselect'
 import { RootState } from '../rootReducer'
 

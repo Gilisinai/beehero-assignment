@@ -1,7 +1,6 @@
-// features/users/usersSlice.ts
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
-import { getUsers } from '../services/api'
-import { User } from '../components/types'
+import { getUsers } from '../../services/api'
+import { User } from '../../components/types'
 
 interface UsersState {
   users: User[]
