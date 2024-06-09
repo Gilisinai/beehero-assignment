@@ -11,14 +11,20 @@ import { fetchUsers } from '../store/users'
 import { AppDispatch } from '../store/store'
 import { fetchUserPosts } from '../store/posts'
 import EditPostModal from '../components/EditPostModal'
+import { getUsers, getSelectedUser } from '../store/selectors/userSelectors'
+import { getPostsByUserId } from '../store/selectors/postSelectors'
+import { useAppSelector } from '../store/hooks/hooks'
 
 const UsersScreen = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const { users, selectedUser } = useSelector((state: RootState) => state.users)
-  const usersStatus = useSelector((state: RootState) => state.users.status)
-  const posts = useSelector((state: RootState) =>
-    selectedUser ? state.posts.userPosts[selectedUser.id] || [] : []
+  const users = useAppSelector(getUsers)
+  const selectedUser = useAppSelector(getSelectedUser)
+  const usersStatus = useAppSelector((state: RootState) => state.users.status)
+  const posts = useAppSelector((state: RootState) =>
+    selectedUser ? getPostsByUserId(state, selectedUser.id) : []
   )
+
+  console.log('userscreen rendered')
 
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [editablePost, setEditablePost] = useState<Post | null>(null)
