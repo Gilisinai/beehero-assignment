@@ -1,14 +1,20 @@
 import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { Post } from './types'
+import { useDispatch } from 'react-redux'
+import { removePost } from '../store/posts'
 
 interface PostCardProps {
   post: Post
-  // onRemove: () => void
-  // onSelect: () => void
 }
 
 const PostCard: React.FC<PostCardProps> = ({ post }) => {
+  const dispatch = useDispatch()
+
+  const handleRemovePost = () => {
+    dispatch(removePost(post.id))
+  }
+
   return (
     <TouchableOpacity
       style={styles.card}
@@ -16,10 +22,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
     >
       <Text style={styles.title}>{post.title}</Text>
       <Text style={styles.body}>{post.body}</Text>
-      <TouchableOpacity
-        style={styles.removeButton}
-        // onPress={onRemove}
-      >
+      <TouchableOpacity style={styles.removeButton} onPress={handleRemovePost}>
         <Text style={styles.removeText}>X</Text>
       </TouchableOpacity>
     </TouchableOpacity>

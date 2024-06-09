@@ -5,12 +5,14 @@ import { User } from '../components/types'
 
 interface UsersState {
   users: User[]
+  selectedUser: User | null
   status: 'idle' | 'loading' | 'succeeded' | 'failed'
   error: string | null
 }
 
 const initialState: UsersState = {
   users: [],
+  selectedUser: null,
   status: 'idle',
   error: null
 }
@@ -26,6 +28,12 @@ const usersSlice = createSlice({
   reducers: {
     removeUser: (state, action: PayloadAction<number>) => {
       state.users = state.users.filter((user) => user.id !== action.payload)
+      if (state.selectedUser?.id === action.payload) {
+        state.selectedUser = null
+      }
+    },
+    selectUser: (state, action: PayloadAction<User>) => {
+      state.selectedUser = action.payload
     }
   },
   extraReducers: (builder) => {
@@ -44,5 +52,5 @@ const usersSlice = createSlice({
   }
 })
 
-export const { removeUser } = usersSlice.actions
+export const { removeUser, selectUser } = usersSlice.actions
 export default usersSlice.reducer

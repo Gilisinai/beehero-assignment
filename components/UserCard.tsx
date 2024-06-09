@@ -5,14 +5,13 @@ import { MapScreenNavigationProp } from '../navigation/types'
 import { User } from './types'
 import { GlobalStyles } from '../constants/styles'
 import { useDispatch } from 'react-redux'
-import { removeUser } from '../store/users'
+import { removeUser, selectUser } from '../store/users'
 
 interface UserCardProps {
   user: User
-  onSelect: () => void
 }
 
-const UserCard: React.FC<UserCardProps> = ({ onSelect, user }) => {
+const UserCard: React.FC<UserCardProps> = ({ user }) => {
   const navigation = useNavigation<MapScreenNavigationProp>()
   const dispatch = useDispatch()
 
@@ -27,8 +26,12 @@ const UserCard: React.FC<UserCardProps> = ({ onSelect, user }) => {
     dispatch(removeUser(user.id))
   }
 
+  const handleSelectUser = () => {
+    dispatch(selectUser(user))
+  }
+
   return (
-    <TouchableOpacity style={styles.card} onPress={onSelect}>
+    <TouchableOpacity style={styles.card} onPress={handleSelectUser}>
       <Text style={styles.name}>
         {user.name} ({user.username})
       </Text>

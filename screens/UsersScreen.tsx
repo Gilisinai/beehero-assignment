@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { StyleSheet, Text, View, FlatList, ScrollView } from 'react-native'
-import { getUserPosts, getUsers } from '../services/api'
 import UserCard from '../components/UserCard'
 import { Post, User } from '../components/types'
 import PostCard from '../components/PostCard'
@@ -10,13 +9,14 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../store/rootReducer'
 import { fetchUsers } from '../store/users'
 import { AppDispatch } from '../store/store'
+import { fetchUserPosts } from '../store/posts'
 
 const UsersScreen = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const users = useSelector((state: RootState) => state.users.users)
+  const { users, selectedUser } = useSelector((state: RootState) => state.users)
   const usersStatus = useSelector((state: RootState) => state.users.status)
-  const [selectedUser, setSelectedUser] = useState<User | null>(null)
-  const [userPosts, setUserPosts] = useState<Post[]>([])
+  const posts = useSelector((state: RootState) => state.posts.posts)
+  const postsStatus = useSelector((state: RootState) => state.posts.status)
 
   useEffect(() => {
     if (usersStatus === 'idle') {
@@ -24,28 +24,18 @@ const UsersScreen = () => {
     }
   }, [usersStatus, dispatch])
 
-  const fetchUserPosts = async (userId: number) => {
-    try {
-      const response = await getUserPosts(userId)
-      setUserPosts(response.data)
-    } catch (error) {
-      console.error('Failed to fetch user posts:', error)
+  useEffect(() => {
+    if (selectedUser) {
+      dispatch(fetchUserPosts(selectedUser.id))
     }
-  }
-
-  const handleUserSelect = (user: User) => {
-    setSelectedUser(user)
-    fetchUserPosts(user.id)
-  }
+  }, [selectedUser, dispatch])
 
   return (
     <ScrollView style={styles.container}>
       {users.length > 0 ? (
         <FlatList
           data={users}
-          renderItem={({ item }) => (
-            <UserCard onSelect={() => handleUserSelect(item)} user={item} />
-          )}
+          renderItem={({ item }) => <UserCard user={item} />}
           keyExtractor={(item) => item.id.toString()}
           numColumns={4}
           contentContainerStyle={styles.userCardContainer}
@@ -61,9 +51,9 @@ const UsersScreen = () => {
         <Text style={styles.noUsersText}>No users found</Text>
       )}
 
-      {userPosts.length > 0 ? (
+      {posts.length > 0 ? (
         <FlatList
-          data={userPosts}
+          data={posts}
           renderItem={({ item }) => <PostCard post={item} />}
           keyExtractor={(item) => item.id.toString()}
           numColumns={4}

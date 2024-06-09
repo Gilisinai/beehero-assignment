@@ -1,9 +1,10 @@
 import { combineReducers } from '@reduxjs/toolkit'
 import usersReducer from './users'
+import postsReducer from './posts'
 
 const rootReducer = combineReducers({
-  users: usersReducer
-  // other reducers
+  users: usersReducer,
+  posts: postsReducer
 })
 
 export type RootState = ReturnType<typeof rootReducer>
