@@ -1,6 +1,6 @@
 import { combineReducers } from '@reduxjs/toolkit'
-import usersReducer from './users'
-import postsReducer from './posts'
+import usersReducer from './slices/users'
+import postsReducer from './slices/posts'
 
 const rootReducer = combineReducers({
   users: usersReducer,

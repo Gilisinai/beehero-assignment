@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { View, Text, TextInput, Button, StyleSheet, Modal } from 'react-native'
 import { useDispatch } from 'react-redux'
-import { updatePost } from '../store/posts'
+import { updatePost } from '../store/slices/posts'
 import { Post } from './types'
 import { GlobalStyles } from '../constants/styles'
 import CustomButton from './CustomButton'

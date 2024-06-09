@@ -6,7 +6,7 @@ import { MapScreenNavigationProp } from '../navigation/types'
 import { User } from './types'
 import { GlobalStyles } from '../constants/styles'
 import { useDispatch } from 'react-redux'
-import { removeUser, selectUser } from '../store/users'
+import { removeUser, selectUser } from '../store/slices/users'
 
 interface UserCardProps {
   user: User
@@ -87,7 +87,8 @@ const styles = StyleSheet.create({
   name: {
     color: GlobalStyles.colors.secondary,
     fontWeight: 'bold',
-    fontSize: 14
+    fontSize: 14,
+    maxWidth: '90%'
   },
   username: {
     color: '#666',
