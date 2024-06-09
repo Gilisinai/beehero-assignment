@@ -74,8 +74,9 @@ This project is a React Native application built with TypeScript. It allows user
 
 
 ## Improvements and Future Enhancements
-   - Styling Enhancements: Refine styling for a more polished and consistent look across the application (adding more global styles etc... )
-   - Making more reusable components , CustomInput , reusable Card etc..
+   - Styling Enhancements: Refine styling for a more polished and consistent look across the application (adding more global styles etc... ).
+   - Making more reusable components , CustomInput , reusable Card etc.. .
+   - Adding a Create Post functionality , for now , if all the posts of a user is deleted , the app will refetch them from the api as new ones.
 
 
 
