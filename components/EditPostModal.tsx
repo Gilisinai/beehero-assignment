@@ -4,6 +4,8 @@ import { View, Text, TextInput, Button, StyleSheet, Modal } from 'react-native'
 import { useDispatch } from 'react-redux'
 import { updatePost } from '../store/posts'
 import { Post } from './types'
+import { GlobalStyles } from '../constants/styles'
+import CustomButton from './CustomButton'
 
 interface EditPostModalProps {
   post: Post | null
@@ -86,8 +88,12 @@ const EditPostModal: React.FC<EditPostModalProps> = ({
           />
           {bodyError ? <Text style={styles.errorText}>{bodyError}</Text> : null}
           <View style={styles.buttonContainer}>
-            <Button title="Save" onPress={handleSave} />
-            <Button title="Cancel" onPress={onClose} />
+            <CustomButton title="Cancel" onPress={onClose} />
+            <CustomButton
+              title="Save"
+              onPress={handleSave}
+              style={{ backgroundColor: GlobalStyles.colors.primary }}
+            />
           </View>
         </View>
       </View>

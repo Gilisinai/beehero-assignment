@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../navigation/types'
 import { GlobalStyles } from '../constants/styles'
+import CustomButton from '../components/CustomButton'
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -23,12 +24,11 @@ const HomeScreen = () => {
         />
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
+        <CustomButton
           style={styles.button}
           onPress={() => navigation.navigate('Users')}
-        >
-          <Text style={styles.buttonText}>Enter App</Text>
-        </TouchableOpacity>
+          title="Enter App"
+        />
       </View>
     </View>
   )
