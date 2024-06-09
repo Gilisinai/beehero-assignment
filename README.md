@@ -32,8 +32,8 @@ This project is a React Native application built with TypeScript. It allows user
 
 1. **Clone the repository:**
    ```sh
-   git clone https://github.com/yourusername/react-native-user-post-management.git
-   cd react-native-user-post-management
+   git clone https://github.com/Gilisinai/beehero-assignment.git
+   cd beehero-assignment
 
 2. **Install dependencies:**
    ```sh
