@@ -69,7 +69,8 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
     fontSize: 14,
-    color: GlobalStyles.colors.secondary
+    color: GlobalStyles.colors.secondary,
+    maxWidth: '90%'
   },
   body: {
     fontSize: 12,
