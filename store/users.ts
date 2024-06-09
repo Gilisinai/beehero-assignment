@@ -1,5 +1,5 @@
 // features/users/usersSlice.ts
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { getUsers } from '../services/api'
 import { User } from '../components/types'
 
@@ -23,7 +23,11 @@ export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
 const usersSlice = createSlice({
   name: 'users',
   initialState,
-  reducers: {},
+  reducers: {
+    removeUser: (state, action: PayloadAction<number>) => {
+      state.users = state.users.filter((user) => user.id !== action.payload)
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchUsers.pending, (state) => {
@@ -40,4 +44,5 @@ const usersSlice = createSlice({
   }
 })
 
+export const { removeUser } = usersSlice.actions
 export default usersSlice.reducer

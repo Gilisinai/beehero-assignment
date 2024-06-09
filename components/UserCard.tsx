@@ -4,6 +4,8 @@ import { useNavigation } from '@react-navigation/native'
 import { MapScreenNavigationProp } from '../navigation/types'
 import { User } from './types'
 import { GlobalStyles } from '../constants/styles'
+import { useDispatch } from 'react-redux'
+import { removeUser } from '../store/users'
 
 interface UserCardProps {
   user: User
@@ -12,12 +14,17 @@ interface UserCardProps {
 
 const UserCard: React.FC<UserCardProps> = ({ onSelect, user }) => {
   const navigation = useNavigation<MapScreenNavigationProp>()
+  const dispatch = useDispatch()
 
   const handleCoordinatesClick = () => {
     navigation.navigate('Map', {
       latitude: parseFloat(user.address.geo.lat),
       longitude: parseFloat(user.address.geo.lng)
     })
+  }
+
+  const handleRemoveUser = () => {
+    dispatch(removeUser(user.id))
   }
 
   return (
@@ -32,7 +39,7 @@ const UserCard: React.FC<UserCardProps> = ({ onSelect, user }) => {
         </Text>
       </TouchableOpacity>
       <Text style={styles.innerText}>{user.company.name}</Text>
-      <TouchableOpacity style={styles.removeButton}>
+      <TouchableOpacity style={styles.removeButton} onPress={handleRemoveUser}>
         <Text style={styles.removeText}>X</Text>
       </TouchableOpacity>
     </TouchableOpacity>
