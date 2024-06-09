@@ -41,7 +41,7 @@ const UserCard: React.FC<UserCardProps> = React.memo(({ user }) => {
           style={styles.removeButton}
           onPress={handleRemoveUser}
         >
-          <FontAwesome name="trash" size={16} color="red" />
+          <Text style={styles.removeButtonText}>X</Text>
         </TouchableOpacity>
       </View>
       <Text style={styles.username}>@{user.username}</Text>
@@ -115,6 +115,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     right: 0
+  },
+  removeButtonText: {
+    color: 'red'
   }
 })
 

@@ -1,6 +1,5 @@
 import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import { FontAwesome } from '@expo/vector-icons'
 import { useDispatch } from 'react-redux'
 import { removePost } from '../store/slices/posts'
 import { Post } from './types'
@@ -30,7 +29,7 @@ const PostCard: React.FC<PostCardProps> = React.memo(
             style={styles.removeButton}
             onPress={handleRemovePost}
           >
-            <FontAwesome name="trash" size={16} color="red" />
+            <Text style={styles.removeButtonText}>X</Text>
           </TouchableOpacity>
         </View>
         <Text ellipsizeMode="tail" numberOfLines={5} style={styles.body}>
@@ -80,6 +79,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     right: 0
+  },
+  removeButtonText: {
+    color: 'red'
   }
 })
 
