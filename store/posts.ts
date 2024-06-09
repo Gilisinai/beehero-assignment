@@ -2,6 +2,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { getUserPosts } from '../services/api'
 import { Post } from '../components/types'
+import { RootState } from './rootReducer'
 
 interface PostsState {
   userPosts: { [key: number]: Post[] }
@@ -20,6 +21,18 @@ export const fetchUserPosts = createAsyncThunk(
   async (userId: number) => {
     const response = await getUserPosts(userId)
     return { userId, posts: response.data }
+  }
+)
+
+export const conditionalFetchUserPosts = createAsyncThunk(
+  'posts/conditionalFetchUserPosts',
+  async (userId: number, { getState, dispatch }) => {
+    const state = getState() as RootState
+    const posts = state.posts.userPosts[userId]
+    if (!posts || posts.length === 0) {
+      await dispatch(fetchUserPosts(userId))
+    }
+    return { userId }
   }
 )
 

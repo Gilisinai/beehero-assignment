@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../store/rootReducer'
 import { fetchUsers } from '../store/users'
 import { AppDispatch } from '../store/store'
-import { fetchUserPosts } from '../store/posts'
+import { conditionalFetchUserPosts, fetchUserPosts } from '../store/posts'
 import EditPostModal from '../components/EditPostModal'
 import { getUsers, getSelectedUser } from '../store/selectors/userSelectors'
 import { getPostsByUserId } from '../store/selectors/postSelectors'
@@ -20,11 +20,7 @@ const UsersScreen = () => {
   const users = useAppSelector(getUsers)
   const selectedUser = useAppSelector(getSelectedUser)
   const usersStatus = useAppSelector((state: RootState) => state.users.status)
-  const posts = useAppSelector((state: RootState) =>
-    selectedUser ? getPostsByUserId(state, selectedUser.id) : []
-  )
-
-  console.log('userscreen rendered')
+  const posts = useAppSelector((state: RootState) => state.posts.userPosts)
 
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [editablePost, setEditablePost] = useState<Post | null>(null)
@@ -33,13 +29,13 @@ const UsersScreen = () => {
     if (usersStatus === 'idle') {
       dispatch(fetchUsers())
     }
-  }, [usersStatus, dispatch])
+  }, [])
 
   useEffect(() => {
-    if (selectedUser && !posts.length) {
-      dispatch(fetchUserPosts(selectedUser.id))
+    if (selectedUser) {
+      dispatch(conditionalFetchUserPosts(selectedUser.id))
     }
-  }, [selectedUser, dispatch])
+  }, [selectedUser])
 
   const handlePostEdit = (post: Post) => {
     setEditablePost(post)
@@ -73,9 +69,12 @@ const UsersScreen = () => {
         <Text style={styles.noUsersText}>No users found</Text>
       )}
 
-      {posts.length > 0 ? (
+      {selectedUser &&
+      posts &&
+      Object.keys(posts).length > 0 &&
+      posts[selectedUser.id]?.length > 0 ? (
         <FlatList
-          data={posts}
+          data={posts[selectedUser.id]}
           renderItem={({ item }) => (
             <PostCard
               post={item}

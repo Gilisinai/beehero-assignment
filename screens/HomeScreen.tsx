@@ -13,6 +13,8 @@ type HomeScreenNavigationProp = NativeStackNavigationProp<
 const HomeScreen = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>()
 
+  console.log('homescreen rendered')
+
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
