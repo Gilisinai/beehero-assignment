@@ -20,3 +20,10 @@ export interface Post {
   title: string
   body: string
 }
+
+export interface EditPostModalProps {
+  post: Post | null
+  userId: number
+  visible: boolean
+  onClose: () => void
+}

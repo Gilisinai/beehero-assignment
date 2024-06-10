@@ -2,16 +2,9 @@ import React, { useState, useEffect, useRef } from 'react'
 import { View, Text, TextInput, StyleSheet, Modal } from 'react-native'
 import { useDispatch } from 'react-redux'
 import { updatePost } from '../store/slices/posts'
-import { Post } from './types'
+import { EditPostModalProps, Post } from './types'
 import { GlobalStyles } from '../constants/styles'
 import CustomButton from './CustomButton'
-
-interface EditPostModalProps {
-  post: Post | null
-  userId: number
-  visible: boolean
-  onClose: () => void
-}
 
 const EditPostModal: React.FC<EditPostModalProps> = ({
   post,
