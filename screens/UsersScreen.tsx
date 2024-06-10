@@ -18,6 +18,7 @@ const UsersScreen = React.memo(() => {
   const users = useAppSelector(getUsers)
   const selectedUser = useAppSelector(getSelectedUser)
   const usersStatus = useAppSelector((state: RootState) => state.users.status)
+  const postsStatus = useAppSelector((state: RootState) => state.posts.status)
   const posts = useAppSelector((state: RootState) => state.posts.userPosts)
 
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -64,7 +65,13 @@ const UsersScreen = React.memo(() => {
           }
         />
       ) : (
-        <Text style={styles.noUsersText}>No users found</Text>
+        <Text style={styles.noUsersText}>
+          {usersStatus === 'loading'
+            ? 'Loading ...'
+            : usersStatus === 'failed'
+            ? 'No Users Found'
+            : ''}
+        </Text>
       )}
 
       {selectedUser &&
@@ -86,7 +93,13 @@ const UsersScreen = React.memo(() => {
           contentContainerStyle={styles.postCardContainer}
         />
       ) : (
-        <Text style={styles.noUsersText}>No posts found</Text>
+        <Text style={styles.noUsersText}>
+          {postsStatus === 'loading'
+            ? 'Loading ...'
+            : usersStatus === 'failed'
+            ? 'No Posts Found'
+            : ''}
+        </Text>
       )}
 
       {editablePost && selectedUser && (

@@ -117,7 +117,8 @@ const styles = StyleSheet.create({
     right: 0
   },
   removeButtonText: {
-    color: 'red'
+    color: 'red',
+    fontSize: 18
   }
 })
 
