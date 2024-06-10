@@ -29,11 +29,6 @@ This project is a React Native application built with TypeScript. It allows user
 
   - Show user's lat,lng with a bee marker on a map.
 
-- **UI/UX Improvements**
-  - Custom button styles.
-  - Improved card designs for users and posts.
-  - Modal for editing posts with smooth transitions.
-
 ## Setup and Installation
 
 1. **Clone the repository:**
@@ -72,17 +67,12 @@ This project is a React Native application built with TypeScript. It allows user
 
   - Modal for editing post titles and bodies.
   - Validates input fields to ensure they are not empty.
-  - Uses custom buttons with white background and black border.
 
 - **Redux Integration**
 
   - State Management: Uses Redux Toolkit for managing state.
   - Thunks: Handles asynchronous actions using createAsyncThunk.
   - Selectors: Memoized selectors using reselect to optimize performance.
-
-- **CustomButton Component**
-  - Custom button with a white background and black border.
-  - Used in the EditPostModal for Save and Cancel actions.
 
 ## Improvements and Future Enhancements
 
